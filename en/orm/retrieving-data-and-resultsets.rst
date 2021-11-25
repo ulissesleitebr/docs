@@ -128,7 +128,7 @@ execute until you start fetching rows, convert it to an array, or when the
 
     // In a controller or table method.
     $query = $articles->find('all')
-        ->where(['Articles.created >' => new DateTime('-10 days')])
+        ->where(['Articles.created >' => new \DateTime('-10 days')])
         ->contain(['Comments', 'Authors'])
         ->limit(10);
 
@@ -137,7 +137,7 @@ with testing as there are fewer methods to mock::
 
     // In a controller or table method.
     $query = $articles->find('all', [
-        'conditions' => ['Articles.created >' => new DateTime('-10 days')],
+        'conditions' => ['Articles.created >' => new \DateTime('-10 days')],
         'contain' => ['Authors', 'Comments'],
         'limit' => 10
     ]);
@@ -691,7 +691,7 @@ published articles using the following::
 
     $query = $authors->find();
     $query->matching('Articles', function ($q) {
-        return $q->where(['Articles.created >=' => new DateTime('-10 days')]);
+        return $q->where(['Articles.created >=' => new \DateTime('-10 days')]);
     });
 
 Filtering by deep associations uses the same predictable syntax from ``contain()``::
@@ -1148,7 +1148,7 @@ Finally, we put everything together::
 
     $wordCount = $articles->find()
         ->where(['published' => true])
-        ->andWhere(['published_date >=' => new DateTime('2014-01-01')])
+        ->andWhere(['published_date >=' => new \DateTime('2014-01-01')])
         ->disableHydration()
         ->all()
         ->mapReduce($mapper, $reducer)
@@ -1239,7 +1239,7 @@ even after adding a map-reduce routine::
         ->mapReduce($mapper, $reducer);
 
     // At a later point in your app:
-    $query->where(['created >=' => new DateTime('1 day ago')]);
+    $query->where(['created >=' => new \DateTime('1 day ago')]);
 
 This is particularly useful for building custom finder methods as described in the
 :ref:`custom-find-methods` section::
@@ -1251,7 +1251,7 @@ This is particularly useful for building custom finder methods as described in t
 
     public function findRecent(Query $query, array $options)
     {
-        return $query->where(['created >=' => new DateTime('1 day ago')]);
+        return $query->where(['created >=' => new \DateTime('1 day ago')]);
     }
 
     public function findCommonWords(Query $query, array $options)
